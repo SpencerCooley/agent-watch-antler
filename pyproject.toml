@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "chat_orchestrator"
+version = "0.1.0"
+description = "Debt collection agent using FastAPI and LangChain"
+authors = ["Indrajit Haridas <indrajitharidas@gmail.com>"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "3.12.8"
+fastapi = "^0.110.0"
+uvicorn = "^0.27.1"
+pydantic = "==2.9.2"
+groq = "^0.13.0"
+gunicorn = "^23.0.0"
+
+[tool.poetry.scripts]
+agent_api = "src.main:run"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
