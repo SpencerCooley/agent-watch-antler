@@ -1,16 +1,18 @@
 import json
-from typing import Boolean
+
 
 from fastapi import APIRouter, HTTPException
 from groq import AsyncGroq, Groq
 from pydantic import BaseModel
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
-client = AsyncGroq()
+client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
 router = APIRouter()
 
-
 class ComplianceOutput(BaseModel):
-    is_compliant: Boolean
+    is_compliant: bool
     message: str
 
 
