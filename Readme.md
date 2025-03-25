@@ -1,1 +1,1 @@
-Hello World.
+As compliance requirements and company policies continue to evolve, we aim to empower customer service representatives with real-time compliance monitoring. Agent Watcher actively tracks customer service chats and instantly alerts representatives if a policy violation occurs.
