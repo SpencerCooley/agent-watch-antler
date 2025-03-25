@@ -1,15 +1,16 @@
 import json
-
-
-from fastapi import APIRouter, HTTPException
-from groq import AsyncGroq, Groq
-from pydantic import BaseModel
 import os
+
 from dotenv import load_dotenv
+from fastapi import APIRouter, HTTPException
+from groq import AsyncGroq
+from pydantic import BaseModel
+
 load_dotenv()
 
 client = AsyncGroq(api_key=os.getenv("GROQ_API_KEY"))
 router = APIRouter()
+
 
 class ComplianceOutput(BaseModel):
     is_compliant: bool
@@ -21,14 +22,11 @@ class ComplianceInput(BaseModel):
 
 
 @router.post("/check_compliance")
-def check_compliance(request: ComplianceInput):
+async def check_compliance(request: ComplianceInput):
     """
     Check compliance for the user message.
     """
-    chat_completion = client.chat.completions.create(
-        #
-        # Required parameters
-        #
+    chat_completion = await client.chat.completions.create(
         messages=[
             {
                 "role": "system",
@@ -41,12 +39,11 @@ def check_compliance(request: ComplianceInput):
                 "content": request.user_message,
             },
         ],
-        # The language model which will generate the completion.
         model="llama-3.3-70b-versatile",
         temperature=0,
         top_p=1,
         response_format={"type": "json_object"},
     )
 
-    # Print the completion returned by the LLM.
+    # Return the completion content
     return chat_completion.choices[0].message.content
